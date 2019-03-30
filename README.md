@@ -3,7 +3,7 @@ comix-server
 
 Comix-server is a PHP-based AirComix Server acting just as the Windows
 version. Originally it was written to run on the Synology NAS. However,
-it can run on any platforms where Apache HTTP Server runs, such as
+it can run on any platforms where HTTP/PHP Server runs, such as
 Ubuntu Linux or OS X.
 
 Comix-server is only compatible with **iOS AirComix** app.
@@ -11,40 +11,14 @@ Comix-server is only compatible with **iOS AirComix** app.
 
 ## How to install
 
-- Installer now supports both **DSM 5.x** and 4.x.
-- Log in to the Synology DSM and make a shared folder, for example,
-  named "manga". This directory will be your manga directory.
-- Enable SSH and Web Station.
-- Download [comix-server-master.zip](https://github.com/song31/comix-server/archive/master.zip),
-  unzip it, and copy install.sh and uninstall.sh to your manga directory.
-- Connect to your Synology server using SSH as root and go to the manga 
-  directory (/volume1/manga). The path might be different in your
-  system. Modify *MANGA_DIR* in install.sh if the path is not /volume1/manga.   
-  ```
-  DiskStation> cd /volume1/manga
-  ```
-- Give the execution permission on install.sh.   
-  ```
-  DiskStation> chmod 755 install.sh
-  ```
-- Run install.sh.   
-  ```
-  DiskStation> ./install.sh
-  ```
-  
-For more information about installation, please refer to the [INSTALL.md](https://github.com/song31/comix-server/blob/master/INSTALL.md).  
+- put index.php to your web directory (you should use web document root)
+- make subdirectory named as 'manga' and put all things in.
 
 
-## How to uninstall
+## Nginx configuration 
 
-- Run uninstall.sh on the Synology shell.
+    rewrite ^/(.*) /index.php;
 
-Special thanks to "20eung" for providing the install & uninstall script.
-
-
-## How to run
-
-Start Apache HTTP Server. Usually the Apache HTTP process automatically starts when the machine boots up.
 
 
 ## How to use
@@ -52,19 +26,13 @@ Start Apache HTTP Server. Usually the Apache HTTP process automatically starts w
 - Copy your comic collection to the manga directory.
 - Start the AirComix app on your iOS devices and add comix-server as an AirComix Server.
   Select the **AirComix Server URL** menu to fill in your comix-server information.
-  Note that default port number is 31257.
+  use 80 port.
 - Enjoy!
 
-
-## How to contribute
-
-Bug reports and pull requests are always welcome.
 
 
 ## FAQ
 
-Q) Which Synology DSM versions are supported?   
-A) The install script was tested only on DSM 5.x and 4.x. However, comix-server itself is just a web application written in PHP so it should run on any platforms with HTTPD & PHP.
 
 Q) Which file formats are supported?  
 A) Comix-server supports archive formats such as ZIP and CBZ.
@@ -83,11 +51,10 @@ A) Yes. You can make any directory structure.
    which does not have any child directory.
 
 Q) How can I change the port number?  
-A) See conf/httpd.conf-comix.
+A) configure your nginx.
 
 Q) How can I change the manga directory?  
-A) See comments in handler.php. You need to modify handler.php, index.php, 
-   user-setting.ini, and httpd.conf-comix.
+A) See comments index.php, $parent_path = "manga";
 
 Q) Does comix-server support password protection?  
 A) Yes, using Apache's basic authentication mechanism. Refer to 
