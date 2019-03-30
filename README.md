@@ -1,5 +1,5 @@
-comix-server
-============
+comix-server-php
+================
 
 Comix-server is a PHP-based AirComix Server acting just as the Windows
 version. Originally it was written to run on the Synology NAS. However,
